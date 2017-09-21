@@ -14,7 +14,16 @@ class Main2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+        initEvent()
         mAuth = FirebaseAuth.getInstance()
+    }
+
+    private fun initEvent() {
+        btnLogout.setOnClickListener{
+            mAuth.signOut()
+            finish()
+        }
+
     }
 
     override fun onStart() {
