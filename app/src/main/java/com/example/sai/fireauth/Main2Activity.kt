@@ -24,13 +24,8 @@ class Main2Activity : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: FirebaseUser) {
-        if(currentUser != null){
             val email = currentUser.email
             displayEmail.text = email
-
-        }else{
-            shortToast("Current User is Null")
-        }
     }
 
     private fun shortToast(message: String, length: Int = Toast.LENGTH_SHORT){

@@ -1,6 +1,8 @@
 package com.example.sai.fireauth
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
@@ -13,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var mAuth: FirebaseAuth
+
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onClick(p0: View?) {
         when(p0){
@@ -65,6 +69,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 .addOnCompleteListener {
                     if(it.isComplete){
                         shortToast("Login Success")
+                        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                        if(chkSave.isChecked){
+                            editor.putString("email", email)
+                            editor.putString("password", password)
+                            editor.putBoolean("check", true)
+                            editor.commit()
+                        }else{
+                            editor.remove("email")
+                            editor.remove("password")
+                            editor.remove("check")
+                            editor.commit()
+                        }
                         route()
                     }else{
                         shortToast("Login Failed")
@@ -86,6 +102,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_main)
         init()
         initToolbar()
+        sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE)
+        edtEmail.setText(sharedPreferences.getString("email", ""))
+        edtPassword.setText(sharedPreferences.getString("password", ""))
+        chkSave.isChecked = sharedPreferences.getBoolean("check", false)
         mAuth = FirebaseAuth.getInstance()
     }
 

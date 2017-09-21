@@ -48,6 +48,12 @@
                 android:hint="Password" />
         </android.support.design.widget.TextInputLayout>
 
+        <CheckBox
+            android:id="@+id/chkSave"
+            android:text="Save Email and Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/btnLogin"
             android:text="Login"
